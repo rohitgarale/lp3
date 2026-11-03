@@ -4,8 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DAA Practical Programs</title>
+
 <style>
-    * { box-sizing: border-box; }
+    * {
+        box-sizing: border-box;
+    }
 
     body {
         margin: 0;
@@ -14,7 +17,6 @@
         font-family: Arial, sans-serif;
     }
 
-    /* Simple grid similar to the supplied screenshot */
     #container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
@@ -65,18 +67,22 @@
         #container {
             grid-template-columns: 1fr;
         }
+
         .code-box {
             height: 390px;
         }
     }
 </style>
 </head>
+
 <body>
 
 <div id="container"></div>
 
 <script>
+
 const practicals = [
+
 {
     name: "Fibonacci.cpp",
     code: `#include <iostream>
@@ -123,11 +129,13 @@ int main() {
     fibonacciIterative(n);
 
     cout << "Recursive Fibonacci: ";
+
     for (int i = 0; i < n; i++) {
         cout << fibonacciRecursive(i) << " ";
     }
 
     cout << endl;
+
     return 0;
 }
 
@@ -141,11 +149,13 @@ Recursive: O(n) due to call stack
 Iterative: O(1)
 */`
 },
+
 {
     name: "Huffman.cpp",
     code: `#include <iostream>
 #include <queue>
 #include <vector>
+#include <string>
 using namespace std;
 
 // Structure for Huffman Tree Node
@@ -177,8 +187,10 @@ void generateCodes(Node* root, string code) {
     // Leaf node
     if (root->left == nullptr &&
         root->right == nullptr) {
+
         cout << root->data << " : ";
         cout << (code.empty() ? "0" : code) << endl;
+
         return;
     }
 
@@ -204,6 +216,7 @@ int main() {
 
     // Read characters and frequencies
     for (int i = 0; i < n; i++) {
+
         cout << "Enter character and frequency: ";
         cin >> ch >> freq;
 
@@ -217,6 +230,7 @@ int main() {
 
     // Build Huffman Tree using greedy strategy
     while (pq.size() > 1) {
+
         Node* left = pq.top();
         pq.pop();
 
@@ -237,6 +251,7 @@ int main() {
     Node* root = pq.top();
 
     cout << "\\nHuffman Codes:\\n";
+
     generateCodes(root, "");
 
     return 0;
@@ -247,6 +262,7 @@ Time Complexity: O(n log n)
 Space Complexity: O(n)
 */`
 },
+
 {
     name: "FractionalKnapsack.cpp",
     code: `#include <iostream>
@@ -281,10 +297,12 @@ int main() {
     cout << "Enter profit and weight of each item:\\n";
 
     for (int i = 0; i < n; i++) {
+
         cin >> items[i].profit >> items[i].weight;
 
         if (items[i].profit < 0 ||
             items[i].weight <= 0) {
+
             cout << "Invalid profit or weight.";
             return 0;
         }
@@ -309,17 +327,21 @@ int main() {
 
     // Fill the knapsack
     for (int i = 0; i < n; i++) {
+
         if (remainingCapacity == 0) {
             break;
         }
 
         // Take the complete item
         if (items[i].weight <= remainingCapacity) {
+
             remainingCapacity -= items[i].weight;
             totalProfit += items[i].profit;
         }
+
         // Take a fraction of the item
         else {
+
             double fraction =
                 (double)remainingCapacity / items[i].weight;
 
@@ -329,7 +351,9 @@ int main() {
     }
 
     cout << fixed << setprecision(2);
-    cout << "\\nMaximum Profit: " << totalProfit << endl;
+
+    cout << "\\nMaximum Profit: "
+         << totalProfit << endl;
 
     return 0;
 }
@@ -339,6 +363,7 @@ Time Complexity: O(n log n)
 Space Complexity: O(n) for the items array
 */`
 },
+
 {
     name: "Knapsack01.cpp",
     code: `#include <iostream>
@@ -363,6 +388,7 @@ int main() {
     cout << "Enter weight and profit of each item:\\n";
 
     for (int i = 1; i <= n; i++) {
+
         cin >> weight[i] >> profit[i];
 
         if (weight[i] <= 0 || profit[i] < 0) {
@@ -387,13 +413,17 @@ int main() {
 
     // Fill the DP table
     for (int i = 1; i <= n; i++) {
+
         for (int w = 0; w <= capacity; w++) {
 
             // Cannot include item if it is too heavy
             if (weight[i] > w) {
+
                 dp[i][w] = dp[i - 1][w];
             }
+
             else {
+
                 // Choose maximum of including or excluding item
                 dp[i][w] = max(
                     dp[i - 1][w],
@@ -413,9 +443,13 @@ int main() {
     bool selected = false;
 
     for (int i = n; i >= 1; i--) {
+
         if (dp[i][w] != dp[i - 1][w]) {
+
             cout << i << " ";
+
             selected = true;
+
             w -= weight[i];
         }
     }
@@ -425,15 +459,20 @@ int main() {
     }
 
     cout << endl;
+
     return 0;
 }
 
 /*
 Time Complexity: O(n * W)
 Space Complexity: O(n * W)
-where n = number of items and W = knapsack capacity.
+
+where:
+n = number of items
+W = knapsack capacity
 */`
 },
+
 {
     name: "NQueens.cpp",
     code: `#include <iostream>
@@ -446,6 +485,7 @@ bool isSafe(vector<vector<int>>& board,
 
     // Check the same column in previous rows
     for (int i = 0; i < row; i++) {
+
         if (board[i][col] == 1) {
             return false;
         }
@@ -454,6 +494,7 @@ bool isSafe(vector<vector<int>>& board,
     // Check upper-left diagonal
     for (int i = row - 1, j = col - 1;
          i >= 0 && j >= 0; i--, j--) {
+
         if (board[i][j] == 1) {
             return false;
         }
@@ -462,6 +503,7 @@ bool isSafe(vector<vector<int>>& board,
     // Check upper-right diagonal
     for (int i = row - 1, j = col + 1;
          i >= 0 && j < n; i--, j++) {
+
         if (board[i][j] == 1) {
             return false;
         }
@@ -481,6 +523,7 @@ bool solveNQueens(vector<vector<int>>& board,
 
     // Try each column in the current row
     for (int col = 0; col < n; col++) {
+
         if (isSafe(board, row, col, n)) {
 
             // Place Queen
@@ -500,7 +543,7 @@ bool solveNQueens(vector<vector<int>>& board,
 }
 
 int main() {
-    int n, firstCol;
+    int n, firstRow, firstCol;
 
     cout << "Enter number of Queens: ";
     cin >> n;
@@ -510,12 +553,21 @@ int main() {
         return 0;
     }
 
-    cout << "Enter first Queen column (1 to "
-         << n << "): ";
-    cin >> firstCol;
+    // The first Queen is fixed in row 0.
+    // Enter row and column using 0-based indexing.
+    cout << "Enter first Queen row and column (0 to "
+         << n - 1 << "): ";
 
-    if (firstCol < 1 || firstCol > n) {
-        cout << "Invalid column position.";
+    cin >> firstRow >> firstCol;
+
+    // The first Queen must be in row 0
+    if (firstRow != 0 ||
+        firstCol < 0 ||
+        firstCol >= n) {
+
+        cout << "Invalid position. Enter row 0 and a column "
+             << "between 0 and " << n - 1 << ".";
+
         return 0;
     }
 
@@ -524,15 +576,18 @@ int main() {
         n, vector<int>(n, 0)
     );
 
-    // Place the first Queen in the first row
-    board[0][firstCol - 1] = 1;
+    // Place the first Queen at the given position
+    board[firstRow][firstCol] = 1;
 
     // Solve the remaining rows
-    if (solveNQueens(board, 1, n)) {
+    if (solveNQueens(board, firstRow + 1, n)) {
+
         cout << "\\nFinal N-Queens Matrix:\\n";
 
         for (int i = 0; i < n; i++) {
+
             for (int j = 0; j < n; j++) {
+
                 if (board[i][j] == 1) {
                     cout << "Q ";
                 }
@@ -540,10 +595,13 @@ int main() {
                     cout << ". ";
                 }
             }
+
             cout << endl;
         }
     }
+
     else {
+
         cout << "\\nNo solution exists with the given "
              << "first Queen position.";
     }
@@ -557,11 +615,14 @@ Space Complexity: O(N^2) for the board
 Recursion Stack: O(N)
 */`
 }
+
 ];
 
+// Display practical programs
 const container = document.getElementById("container");
 
 practicals.forEach((practical) => {
+
     const card = document.createElement("div");
     card.className = "card";
 
@@ -570,8 +631,10 @@ practicals.forEach((practical) => {
 
     const pre = document.createElement("pre");
     pre.textContent = practical.code;
+
     codeBox.appendChild(pre);
 
+    // Create download link
     const download = document.createElement("a");
     download.className = "download";
     download.textContent = "Download File";
@@ -579,6 +642,7 @@ practicals.forEach((practical) => {
     const blob = new Blob([practical.code], {
         type: "text/plain;charset=utf-8"
     });
+
     const url = URL.createObjectURL(blob);
 
     download.href = url;
@@ -586,8 +650,10 @@ practicals.forEach((practical) => {
 
     card.appendChild(codeBox);
     card.appendChild(download);
+
     container.appendChild(card);
 });
+
 </script>
 
 </body>
